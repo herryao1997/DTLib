@@ -7,6 +7,8 @@
 #include "SeqList.h"
 #include "StaticList.h"
 #include "DynamicList.h"
+#include "StaticArray.h"
+#include "DynamicArray.h"
 
 
 using namespace DTLib;
@@ -53,6 +55,8 @@ void test_4_StaticList_00();
 void test_4_DynamicList_00();
 void test_4_cp_List();
 void test_4_insert_back();
+void test_4_static_array();
+void test_4_dynamic_array();
 
 int main()
 {
@@ -65,7 +69,10 @@ int main()
 //	test_4_StaticList_00();
 //	test_4_DynamicList_00();
 //	test_4_cp_List();
-	test_4_insert_back();
+//	test_4_insert_back();
+//	test_4_static_array();
+	test_4_dynamic_array();
+
 	return 0;
 }
 
@@ -244,6 +251,58 @@ void test_4_insert_back()
 	{
 		std::cout << d[i] << "\t";
 	}
+}
 
 
+void test_4_static_array()
+{
+	StaticArray<int, 5> s1;
+	for(int i=0; i<s1.length(); ++i)
+	{
+		s1[i] = i*i;
+	}
+
+	for(int i=0; i<s1.length(); ++i)
+	{
+		std::cout << s1[i] << std::endl;
+	}
+
+	StaticArray<int, 5> s2;
+	s2 = s1;
+	std::cout << "after copy construction: s2\n";
+	for(int i=0; i<s2.length(); ++i)
+	{
+		std::cout << s2[i] << std::endl;
+	}
+	std::cout << "test for out of bound" << std::endl;
+	s2[6] = 100;
+}
+
+void test_4_dynamic_array()
+{
+	DynamicArray<int> s1(5);
+	for(int i=0; i<s1.length(); ++i)
+	{
+		s1[i] = i*i;
+	}
+
+	for(int i=0; i<s1.length(); ++i)
+	{
+		std::cout << s1[i] << std::endl;
+	}
+
+	DynamicArray<int> s2(10);
+	s2 = s1;
+	std::cout << "after copy construction: s2\n";
+	for(int i=0; i<s2.length(); ++i)
+	{
+		std::cout << s2[i] << std::endl;
+	}
+	s2.resize(8);
+	std::cout << "test for out of bound" << std::endl;
+	s2[6] = 100;
+	for(int i=0; i<s2.length(); ++i)
+	{
+		std::cout << s2[i] << std::endl;
+	}
 }

@@ -99,7 +99,10 @@
 				6,
 				7,
 				8,
-				9
+				9,
+				10,
+				11,
+				12
 			]
 		}
 	],
@@ -156,6 +159,21 @@
 		{
 			"backtrace" : 1,
 			"path" : "DynamicList.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "Array.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "StaticArray.h",
+			"sourceGroupIndex" : 1
+		},
+		{
+			"backtrace" : 1,
+			"path" : "DynamicArray.h",
 			"sourceGroupIndex" : 1
 		}
 	],

@@ -54,6 +54,21 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "/home/herryao/Software/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeFindCodeBlocks.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/herryao/Software/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "/home/herryao/Software/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.27/Modules/ProcessorCount.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "/home/herryao/Software/clion-2023.3.4/bin/cmake/linux/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake"
 		},
 		{
@@ -130,8 +145,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "/home/herryao/cs/DT/DT_Data_Structure/project/datastructure/DTLIb/cmake-build-debug",
-		"source" : "/home/herryao/cs/DT/DT_Data_Structure/project/datastructure/DTLIb"
+		"build" : "/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug",
+		"source" : "/home/herryao/cs/DT/DTLib/DTLIb"
 	},
 	"version" : 
 	{

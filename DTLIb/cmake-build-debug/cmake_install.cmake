@@ -1,4 +1,4 @@
-# Install script for directory: /home/herryao/cs/DT/DT_Data_Structure/project/datastructure/DTLIb
+# Install script for directory: /home/herryao/cs/DT/DTLib/DTLIb
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -50,5 +50,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/herryao/cs/DT/DT_Data_Structure/project/datastructure/DTLIb/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

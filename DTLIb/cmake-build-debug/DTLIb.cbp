@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="DTLIb"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DTLIb">
+				<Option output="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/DTLIb" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 DTLIb"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="DTLIb/fast">
+				<Option output="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/DTLIb" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/11"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/11"/>
+					<Add directory="/usr/include/c++/11/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/11/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 DTLIb/fast"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/gmake -j12 -f &quot;/home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/Array.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/DynamicArray.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/DynamicList.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/Exception.cpp">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/Exception.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/List.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/Object.cpp">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/Object.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/SeqList.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/SmartPointer.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/StaticArray.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/StaticList.h">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/main.cpp">
+			<Option target="DTLIb"/>
+		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

@@ -13,4 +13,7 @@ add_executable(DTLIb main.cpp
         SeqList.h
         StaticList.h
         DynamicList.h
+        Array.h
+        StaticArray.h
+        DynamicArray.h
 )

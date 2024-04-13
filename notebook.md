@@ -2569,4 +2569,689 @@
   - 顺序存储线性表可能被当成数组误用。
   - 工程开发中可以考虑使用数组类代替原声数组使用（下一课内容）。
 
-## 第十九课：
+## 第十九课：数组类的创建（上）
+
+- 课程目标
+
+  - 完成Array类的具体实现（抽象类）
+  - 完成StaticArray类的具体实现
+
+- 需求分析
+
+  - 创建数组类代替原生数组的使用（优化）
+    - 数组类包含长度信息
+    - 数组类能够主动发现越界访问
+
+- 数组类同顺序表的区别
+
+  - 数组是可以相互复制的
+  - 数组不需要先插入元素即可使用下标访问符重载
+
+- Array设计要点
+
+  - 抽象类模板，存储空间的位置和大小由子类完成
+  - 重载数组操作符，判断下标是否合法
+  - 提供数组长度的抽象访问函数
+  - 提供数组对象间的复制操作
+
+- Array类的接口声明
+
+- ```cpp
+  template<typename T>
+  class Array: public Object
+  {
+  protected:
+      T* m_array;
+  public:
+      virtual bool set(int i, const T& e);
+      virtual bool get(int i, T& e) const;
+      virtual int length() const = 0;
+      //数组类访问符号重载
+      T operator [](int i) const;
+      T& operator [](int i);
+  }
+  ```
+
+- 编程实验一：数组抽象类的实现Array.h
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : Array.h
+    * @author         : herryao
+    * @brief          : None
+    * @attention      : None
+    * @date           : 4/13/24
+    ******************************************************************************
+    */
+  
+  
+  
+  #ifndef DTLIB_ARRAY_H
+  #define DTLIB_ARRAY_H
+  #include "Object.h"
+  #include "Exception.h"
+  
+  namespace DTLib
+  {
+  	template <typename T>
+  	class Array: public Object
+  	{
+  	protected:
+  		T* m_array;
+  	public:
+  		virtual bool set(int i, const T& e);
+  		virtual bool get(int i, T& e) const;
+  		virtual int length() const = 0;
+  
+  		T operator[] (int i) const;
+  		T& operator[] (int i);
+  	};
+  
+  
+  	template <typename T>
+  	bool Array<T>::set(int i, const T& e)	//o(1)
+  	{
+  		bool ret = ((i >= 0) && (i < this->length()));
+  		if(ret)
+  		{
+  			this->m_array[i] = e;
+  		}
+  		return ret;
+  	}
+  
+  	template<typename T>
+  	bool Array<T>::get(int i, T &e) const	//o(1)
+  	{
+  		bool ret = ((i >= 0) && (i < this->length()));
+  		if(ret)
+  		{
+  			e = this->m_array[i];
+  		}
+  		return ret;
+  	}
+  
+  	template<typename T>
+  	T& Array<T>::operator [](int i)	//o(1)
+  	{
+  		bool ret = ((i >= 0) && (i < this->length()));
+  		if(ret)
+  		{
+  			return this->m_array[i];
+  		}
+  		else
+  		{
+  			THROW_EXCEPTION(IndexOutOfBoundsException, "failed in access the array element using index ...");
+  		}
+  	}
+  
+  	template<typename T>
+  	T Array<T>::operator [](int i) const	//o(1)
+  	{
+  		//for simplicity
+  //		bool ret = ((i >= 0) && (i < this->length()));
+  //		if(ret)
+  //		{
+  //			return this->m_array[i];
+  //		}
+  //		else
+  //		{
+  //			THROW_EXCEPTION(IndexOutOfBoundsException, "failed in access the array element using index ...");
+  //		}
+  		return (const_cast<Array<T>&>(*this))[i];
+  	}
+  
+  
+  }
+  
+  #endif //DTLIB_ARRAY_H
+  
+  ```
+
+- StaticArray的设计要点
+
+- 类模板
+
+  - 封装原生数组
+  - 使用模板参数决定数组大小
+  - 实现函数返回数组长度
+  - 拷贝构造和拷贝赋值（原生数组不存在此操作）
+
+- StaticArray类的接口声明
+
+- ```cpp
+  template<typename T, int N>
+  class StaticArray: public Array
+  {
+  protected:
+      T m_space[N];
+      
+  public:
+      //constructor
+      StaticArray();
+      //copy constructor
+      StaticArray(const StaticArray<T, N>& obj);
+      //copy assign
+      StaticArray<T, N>& operator = (const StaticArray<T, N> & obj);
+      int length() const;
+  };
+  ```
+
+- 编程实验二：静态数组类的实现StaticArray.h
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : StaticArray.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/13/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_STATICARRAY_H
+  #define DTLIB_STATICARRAY_H
+  #include "Array.h"
+  
+  namespace DTLib
+  {
+      template<typename T, int N>
+      class StaticArray: public Array<T>
+      {
+      protected:
+         T m_space[N];
+  
+      public:
+         //constructor
+         StaticArray()  //O(1)
+         {
+            this->m_array = this->m_space;
+         }
+         //copy constructor
+         StaticArray(const StaticArray<T, N>& obj)  //O(n)
+         {
+            this->m_array = this->m_space;
+            for(int i=0; i<N; ++i)
+            {
+               this->m_space[i] = obj.m_space[i];
+            }
+         }
+         //copy assign
+         StaticArray<T, N>& operator = (const StaticArray<T, N> & obj)  //O(n)
+         {
+            if(this != &obj)
+            {
+               for(int i=0; i<N; ++i)
+               {
+                  this->m_space[i] = obj.m_space[i];
+               }
+            }
+            return *this;
+         }
+         int length() const //O(1)
+         {
+            return N;
+         }
+      };
+  }
+  #endif //DTLIB_STATICARRAY_H
+  ```
+
+- 测使用代码，测试了建立，拷贝以及越界访问
+
+- ```cpp
+  #include <iostream>
+  
+  #include "SmartPointer.h"
+  #include "Exception.h"
+  #include "Object.h"
+  #include "List.h"
+  #include "SeqList.h"
+  #include "StaticList.h"
+  #include "DynamicList.h"
+  #include "StaticArray.h"
+  
+  
+  using namespace DTLib;
+  void test_4_static_array();
+  
+  int main()
+  {
+  //    test_4_sp();
+  //    test_4_exception();
+  //    test_4_obj();
+  //    test_4_single_tree();
+  //	test_4_list_00();
+  //	test_4_SeqList_00();
+  //	test_4_StaticList_00();
+  //	test_4_DynamicList_00();
+  //	test_4_cp_List();
+  //	test_4_insert_back();
+  	test_4_static_array();
+  
+  	return 0;
+  }
+  
+  void test_4_static_array()
+  {
+  	StaticArray<int, 5> s1;
+  	for(int i=0; i<s1.length(); ++i)
+  	{
+  		s1[i] = i*i;
+  	}
+  
+  	for(int i=0; i<s1.length(); ++i)
+  	{
+  		std::cout << s1[i] << std::endl;
+  	}
+  
+  	StaticArray<int, 5> s2;
+  	s2 = s1;
+  	std::cout << "after copy construction: s2\n";
+  	for(int i=0; i<s2.length(); ++i)
+  	{
+  		std::cout << s2[i] << std::endl;
+  	}
+  	std::cout << "test for out of bound" << std::endl;
+  	s2[6] = 100;
+  }
+  ```
+
+- 实战预告
+
+  - 如何实现DynamicArray？
+  - DynamicArray和StaticArray之间的差异在哪里？
+
+## 第二十课：数组类的创建（下）
+
+- StaticArray在创建时必须明确指定数组的大小
+
+- 解决方案：DynamicArray，动态指定数组的大小
+
+- DynamicArray设计要点
+
+- 类模板
+
+  - 动态确定内部数组空间的大小（堆）
+  - 实现函数返回数组长度
+  - 拷贝构造和拷贝赋值
+
+- DynamicArray类的声明
+
+- ```cpp
+  template<typename T>
+  class DynamicArray: public Array<T>
+  {
+  protected:
+      int m_length;
+  public:
+      //constructor
+      DynamicArray(int length);
+      //copy constructor
+      DynamicArray(const DynamicArray<T>& obj);
+      //copy assign
+      DynamicArray<T>& operator = (const DynamicArray<T>& obj);
+      int length()const;
+      void resize(int length);	//dynamic assign the length of array
+      //destructor
+      ~DynamicArray();
+  }
+  ```
+
+- 编程实验一：动态数组类的实现DynamicArray.h
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : DynamicArray.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/13/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_DYNAMICARRAY_H
+  #define DTLIB_DYNAMICARRAY_H
+  #include "Array.h"
+  namespace DTLib
+  {
+  	template<typename T>
+  	class DynamicArray: public Array<T>
+  	{
+  	protected:
+  		int m_length;
+  	public:
+  		DynamicArray(int length);
+  		DynamicArray(const DynamicArray<T>& obj);
+  		DynamicArray<T>& operator =(const DynamicArray<T>& obj);
+  		int length() const;
+  		void resize(int length);
+  		~DynamicArray();
+  	};
+  
+  	template<typename T>
+  	DynamicArray<T>::~DynamicArray()
+  	{
+  		if(this->m_array != nullptr)
+  		{
+  			delete []this->m_array;
+  			this->m_array = nullptr;
+  			this->m_length = 0;
+  		}
+  	}
+  
+  	template<typename T>
+  	void DynamicArray<T>::resize(int length)
+  	{
+  		if(this->length() != length)
+  		{
+  			int new_length = length < this->length() ? length : this->length();
+  			T *array = new T[length];
+  			if(array != nullptr)
+  			{
+  				for(int i=0; i<new_length; ++i)
+  				{
+  					array[i] = this->m_array[i];
+  				}
+  				T* temp = this->m_array;
+  				this->m_array = array;
+  				this->m_length = length;
+  				delete []temp;	//safe in exception
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(NoEnoughMemoryException, "failed in allocate memory in resize of DynamicArray...");
+  			}
+  		}
+  
+  	}
+  
+  	template<typename T>
+  	int DynamicArray<T>::length() const
+  	{
+  		return this->m_length;
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray<T>& obj) {
+  		if(this != &obj)
+  		{
+  			T* array = new T[obj.length()];
+  			if(array != nullptr)
+  			{
+  				for(int i=0; i<obj.length(); ++i)
+  				{
+  					array[i] = obj[i];
+  				}
+  				T* temp = this->m_array;
+  
+  				this->m_length = obj.length();
+  				this->m_array = array;
+  
+  				delete []temp;	//safe in exception
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(NoEnoughMemoryException, "failed in copy assignment of DynamicArray...");
+  			}
+  
+  		}
+  		return *this;
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T>::DynamicArray(const DynamicArray<T> &obj)
+  	{
+  		this->m_array = new T[obj.length()];
+  		if(this->m_array != nullptr)
+  		{
+  			for(int i=0; i<obj.length(); ++i)
+  			{
+  				this->m_array[i] = obj.m_array[i];
+  			}
+  			this->m_length = obj.length();
+  		}
+  		else
+  		{
+  			THROW_EXCEPTION(NoEnoughMemoryException, "failed in copy constructor of DynamicArray...");
+  		}
+  
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T>::DynamicArray(int length)
+  	{
+  		this->m_array = new T[length];
+  		if(this->m_array != nullptr)
+  		{
+  			this->m_length = length;
+  		}
+  		else
+  		{
+  			THROW_EXCEPTION(NoEnoughMemoryException, "failed in constructor of DynamicArray...");
+  		}
+  	}
+  }
+  
+  
+  #endif //DTLIB_DYNAMICARRAY_H
+  ```
+
+- 用于测试的代码如下：在StaticArray的基础上增加了对于resize方法的测试。
+
+- ```cpp
+  #include <iostream>
+  
+  #include "SmartPointer.h"
+  #include "Exception.h"
+  #include "Object.h"
+  #include "List.h"
+  #include "SeqList.h"
+  #include "StaticList.h"
+  #include "DynamicList.h"
+  #include "StaticArray.h"
+  #include "DynamicArray.h"
+  
+  
+  using namespace DTLib;
+  void test_4_dynamic_array();
+  
+  int main()
+  {
+  //    test_4_sp();
+  //    test_4_exception();
+  //    test_4_obj();
+  //    test_4_single_tree();
+  //	test_4_list_00();
+  //	test_4_SeqList_00();
+  //	test_4_StaticList_00();
+  //	test_4_DynamicList_00();
+  //	test_4_cp_List();
+  //	test_4_insert_back();
+  //	test_4_static_array();
+  	test_4_dynamic_array();
+  
+  	return 0;
+  }
+  
+  void test_4_dynamic_array()
+  {
+  	DynamicArray<int> s1(5);
+  	for(int i=0; i<s1.length(); ++i)
+  	{
+  		s1[i] = i*i;
+  	}
+  
+  	for(int i=0; i<s1.length(); ++i)
+  	{
+  		std::cout << s1[i] << std::endl;
+  	}
+  
+  	DynamicArray<int> s2(10);
+  	s2 = s1;
+  	std::cout << "after copy construction: s2\n";
+  	for(int i=0; i<s2.length(); ++i)
+  	{
+  		std::cout << s2[i] << std::endl;
+  	}
+  	s2.resize(8);
+  	std::cout << "test for out of bound" << std::endl;
+  	s2[6] = 100;
+  	for(int i=0; i<s2.length(); ++i)
+  	{
+  		std::cout << s2[i] << std::endl;
+  	}
+  }
+  
+  ```
+
+- 编程实验二：对于重复逻辑的优化
+
+  - resize() 函数和赋值操作符号重载
+  - resize() 函数和拷贝构造函数
+
+- 重复代码逻辑的抽象：函数应当属于保护权限下，不做对外接口
+
+  - init()
+    - 对象构造时的初始化操作
+  - copy()
+    - 在堆空间中申请新的内存，并执行拷贝操作
+  - update()
+    - 将指定的堆空间作为内部存储数组使用
+
+- 优化之后的代码结果如下：
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : DynamicArray.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/13/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_DYNAMICARRAY_H
+  #define DTLIB_DYNAMICARRAY_H
+  #include "Array.h"
+  namespace DTLib
+  {
+  	template<typename T>
+  	class DynamicArray: public Array<T>
+  	{
+  	protected:
+  		int m_length;
+  
+  		T* copy(T* array, int len, int newlen)
+  		{
+  			T* ret = new T[newlen];
+  			if(ret != nullptr)
+  			{
+  				int size = len < newlen ? len : newlen;
+  				for(int i=0; i<size; ++i)
+  				{
+  					ret[i] = array[i];
+  				}
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(NoEnoughMemoryException, "Failed in copy operation of DynamicArray...");
+  			}
+  			return ret;
+  		}
+  
+  		void init(T* array, int length)
+  		{
+  			if(array != nullptr)
+  			{
+  				this->m_array = array;
+  				this->m_length = length;
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(NoEnoughMemoryException, "Failed in construction of DynamicArray...");
+  			}
+  		}
+  
+  		void update(T* array, int length)
+  		{
+  			if(array != nullptr)
+  			{
+  				T* temp = this->m_array;
+  
+  				this->m_length = length;
+  				this->m_array = array;
+  
+  				delete []temp;
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(NoEnoughMemoryException, "Failed in construction of DynamicArray...");
+  			}
+  		}
+  	public:
+  		DynamicArray(int length);
+  		DynamicArray(const DynamicArray<T>& obj);
+  		DynamicArray<T>& operator =(const DynamicArray<T>& obj);
+  		int length() const;
+  		void resize(int length);
+  		~DynamicArray();
+  	};
+  
+  	template<typename T>
+  	DynamicArray<T>::~DynamicArray()
+  	{
+  		if(this->m_array != nullptr)
+  		{
+  			delete []this->m_array;
+  			this->m_array = nullptr;
+  			this->m_length = 0;
+  		}
+  	}
+  
+  	template<typename T>
+  	void DynamicArray<T>::resize(int length)
+  	{
+  		update(copy(this->m_array, this->length(), length),length);
+  	}
+  
+  	template<typename T>
+  	int DynamicArray<T>::length() const
+  	{
+  		return this->m_length;
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray<T>& obj) {
+  		if(this != &obj)
+  		{
+  			update(copy(obj.m_array, obj.length(), obj.length()), obj.length());
+  		}
+  
+  		return *this;
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T>::DynamicArray(const DynamicArray<T> &obj)
+  	{
+  		init(copy(obj.m_array, obj.length(), obj.length()), length());
+  	}
+  
+  	template<typename T>
+  	DynamicArray<T>::DynamicArray(int length)
+  	{
+  		init(new T[length], length);
+  	}
+  }
+  
+  
+  #endif //DTLIB_DYNAMICARRAY_H
+  ```
+
+- 
+
+ 
+
