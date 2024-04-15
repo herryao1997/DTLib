@@ -3145,7 +3145,7 @@
   	protected:
   		int m_length;
   
-  		T* copy(T* array, int len, int newlen)
+  		T* copy(T* array, int len, int newlen)		//	O(min(len, newlen)) = O(n)
   		{
   			T* ret = new T[newlen];
   			if(ret != nullptr)
@@ -3163,7 +3163,7 @@
   			return ret;
   		}
   
-  		void init(T* array, int length)
+  		void init(T* array, int length)		//O(1)
   		{
   			if(array != nullptr)
   			{
@@ -3176,7 +3176,7 @@
   			}
   		}
   
-  		void update(T* array, int length)
+  		void update(T* array, int length)		//O(1)
   		{
   			if(array != nullptr)
   			{
@@ -3200,9 +3200,9 @@
   		void resize(int length);
   		~DynamicArray();
   	};
-  
+  	
   	template<typename T>
-  	DynamicArray<T>::~DynamicArray()
+  	DynamicArray<T>::~DynamicArray()		//O(1)
   	{
   		if(this->m_array != nullptr)
   		{
@@ -3213,19 +3213,20 @@
   	}
   
   	template<typename T>
-  	void DynamicArray<T>::resize(int length)
+  	void DynamicArray<T>::resize(int length)		//O(n)
   	{
   		update(copy(this->m_array, this->length(), length),length);
   	}
   
   	template<typename T>
-  	int DynamicArray<T>::length() const
+  	int DynamicArray<T>::length() const		//O(1)
   	{
   		return this->m_length;
   	}
   
   	template<typename T>
-  	DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray<T>& obj) {
+  	DynamicArray<T> &DynamicArray<T>::operator=(const DynamicArray<T>& obj)		//O(n)
+  	{
   		if(this != &obj)
   		{
   			update(copy(obj.m_array, obj.length(), obj.length()), obj.length());
@@ -3235,13 +3236,13 @@
   	}
   
   	template<typename T>
-  	DynamicArray<T>::DynamicArray(const DynamicArray<T> &obj)
+  	DynamicArray<T>::DynamicArray(const DynamicArray<T> &obj)		//O(n)
   	{
   		init(copy(obj.m_array, obj.length(), obj.length()), length());
   	}
   
   	template<typename T>
-  	DynamicArray<T>::DynamicArray(int length)
+  	DynamicArray<T>::DynamicArray(int length)		//O(1)
   	{
   		init(new T[length], length);
   	}
@@ -3249,9 +3250,101 @@
   
   
   #endif //DTLIB_DYNAMICARRAY_H
+  
   ```
 
-- 
+
+
+## 第二十一课：线性表的链式存储结构
+
+- 顺序存储结构线性表的最大问题是：
+
+  - 插入和删除需要大量的元素移动。
+
+- 链式存储结构的定义
+
+  - 为了表示每个数据元素与其直接后继元素之间的逻辑关系
+  - 数据除了存储本身的信息意外，还需要存储其直接后继的信息
+  - 在链表中相邻，但是并不在物理内存中相连
+
+- 链式存储逻辑结构
+
+  - 基于链式存储结构的线性表中，每个节点都包含数据域和指针域
+  - 数据域：存储数据元素本身
+  - 指针域：存储相邻节点地址
+
+- 专业术语的统一
+
+  - 顺序表（基于顺序存储结构的线性表）
+  - 链表（基于链式存储结构的线性表）
+    - 单链表：每个节点之包含直接后继的地址信息，最后一个节点的后继节点为`nullptr`
+    - 循环链表：单链表中的最后一个节点的直接后继为第一个节点
+    - 双向链表：单链表中的节点包含直接前驱和后继两个节点的地址
+
+- 链表中的基本概念
+
+  - 头节点
+    - 链表中的辅助节点，包含指向第一个元素的指针
+  - 数据节点
+    - 链表中代表数据元素的节点，表现形式为（数据元素，后继/前驱地址）
+  - 尾节点
+    - 链表中的最后一个节点，包含的地址信息为空（但链表，双向链表）
+
+- 单链表中节点的定义
+
+- 在C++中，struct 类型和 class 类型完全一致，区别为默认情况下成员为public权限
+
+  ```cpp
+  template <typename T>
+  struct Node : public Object
+  {
+      T value;
+      Node* next;
+  };
+  ```
+
+- 单链表中的内部结构
+
+- 头节点在但链表中的意义是：
+
+  - 辅助元素的定位
+  - 方便插入和删除操作
+  - 头节点并不存储实际的数据元素
+
+- 在目标位置处插入数据元素
+
+  - 从头节点开始，通过current指针定位到目标位置
+
+  - 从堆空间中申请新的Node节点
+
+  - 执行操作
+
+  - ```cpp
+    node->value = e;
+    node->next = current->next;
+    current->next = node;
+    ```
+
+- 在目标位置处删除数据元素
+
+  - 葱头节点开始，通过current指针定位到目标位置
+
+  - 使用toDel指针指向需要删除的节点
+
+  - 执行操作
+
+  - ```cpp
+    toDel = current->next;
+    current->next = toDel->next;
+    delete toDel;
+    ```
+
+- 小结
+
+  - 链表中的数据元素在物理内存中无相邻关系
+  - 链表中的节点都包含在数据域和指针域
+  - 头节点用于辅助数据元素的定位，方便插入和删除操作
+  - 插入和删除操作需要保证链表的完整性
 
  
 
