@@ -9,6 +9,7 @@
 #include "DynamicList.h"
 #include "StaticArray.h"
 #include "DynamicArray.h"
+#include "LinkList.h"
 
 
 using namespace DTLib;
@@ -57,6 +58,8 @@ void test_4_cp_List();
 void test_4_insert_back();
 void test_4_static_array();
 void test_4_dynamic_array();
+void test_4_link_list();
+void test_4_link_list_2();
 
 int main()
 {
@@ -71,8 +74,9 @@ int main()
 //	test_4_cp_List();
 //	test_4_insert_back();
 //	test_4_static_array();
-	test_4_dynamic_array();
-
+//	test_4_dynamic_array();
+	test_4_link_list();
+//	test_4_link_list_2();
 	return 0;
 }
 
@@ -305,4 +309,64 @@ void test_4_dynamic_array()
 	{
 		std::cout << s2[i] << std::endl;
 	}
+}
+
+
+void test_4_link_list()
+{
+	LinkList<int> list;
+	for(int i=0; i<5; ++i)
+	{
+		list.insert(0, i);
+//		list.insert(i);
+		list.set(0, i*i);
+	}
+
+	for(int i=0; i<list.length(); ++i)
+	{
+//		int v=0;
+//		list.get(i,v);
+//		std::cout << v << std::endl;
+		std::cout << list.get(i) << std::endl;
+	}
+	list.remove(2);
+	for(int i=0; i<list.length(); ++i)
+	{
+		std::cout << list.get(i) << std::endl;
+	}
+	list.clear();
+	for(int i=0; i<list.length(); ++i)
+	{
+		std::cout << list.get(i) << std::endl;
+	}
+
+	class Test
+	{
+	public:
+		Test()
+		{
+			//constructor
+			throw 0;
+		}
+	};
+	LinkList<Test> list1;
+	std::cout << "D.T.Lib" << std::endl;
+}
+
+void test_4_link_list_2()
+{
+	class Test
+	{
+	public:
+		Test()
+		{
+			//constructor
+			throw 0;
+		}
+	};
+	LinkList<Test> list;
+	Test t;
+	list.insert(t);
+	std::cout << "D.T.Lib" << std::endl;
+
 }

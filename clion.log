@@ -1,23 +1,16 @@
 nohup: ignoring input
 CompileCommand: exclude com/intellij/openapi/vfs/impl/FilePartNodeRoot.trieDescend bool exclude = true
-2024-04-15 23:35:59,202 [    411]   WARN - #c.i.s.ComponentManagerImpl - `preload=true` must be used only for core services (service=com.intellij.ae.database.core.baseEvents.fus.AddStatisticsEventLogListenerTemporary, plugin=com.jetbrains.ae.database)
-2024-04-15 23:35:59,203 [    412]   WARN - #c.i.s.ComponentManagerImpl - `preload=true` must be used only for core services (service=com.jetbrains.rdserver.statistics.BackendStatisticsManager, plugin=com.jetbrains.codeWithMe)
-2024-04-15 23:35:59,580 [    789]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.psi.search.FilenameIndex initializer requests com.intellij.ide.plugins.PluginUtil instance
-2024-04-15 23:35:59,733 [    942]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.lang.javascript.psi.jsdoc.impl.JSDocCustomTags initializer requests com.intellij.lang.javascript.JSDisposable instance
-2024-04-15 23:35:59,956 [   1165]   WARN - #c.i.o.v.n.p.d.e.DurableEnumeratorFactory - [enumerator.mmapped]: .valueToId map is out-of-sync with .valuesLog data -> rebuilding it
-2024-04-15 23:36:00,027 [   1236]   WARN - #c.i.c.ComponentStoreImpl - Duplicated scheme Gradianto Dark Fuchsia - old: Gradianto Dark Fuchsia, new Gradianto Dark Fuchsia
-2024-04-15 23:36:00,034 [   1243]   WARN - #c.i.i.u.UIThemeBean - Unknown field: MainWindow.Tab
-2024-04-15 23:36:00,656 [   1865]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.psi.LanguageSubstitutors initializer requests com.intellij.psi.LanguageSubstitutors instance
-2024-04-15 23:36:00,800 [   2009]   WARN - #c.i.s.ComponentManagerImpl - org.zmlx.hg4idea.provider.HgChangeProvider initializer requests com.intellij.openapi.vcs.FileStatusFactory instance
-2024-04-15 23:36:01,686 [   2895]   WARN - #c.i.o.a.i.ActionUpdater - 522 ms to grab EDT for ToolWindowHeader$2#Update@ToolwindowTitle (com.intellij.toolWindow.ToolWindowHeader$2)
-2024-04-15 23:36:02,030 [   3239]   WARN - #o.j.p.t.TextMateService - Cannot find referenced file `./language-configuration.json` in bundle `/home/herryao/Software/clion-2023.3.4/plugins/textmate/lib/bundles/mdx`
-2024-04-15 23:36:02,934 [   4143]   WARN - #c.i.o.a.i.ActionUpdater - 414 ms to grab EDT for FontEditorPreview$RestorePreviewTextAction#Update@ContextToolbar (com.intellij.application.options.colors.FontEditorPreview$RestorePreviewTextAction)
-2024-04-15 23:36:02,935 [   4144]   WARN - #c.i.o.a.i.ActionUpdater - 416 ms to grab EDT for FontEditorPreview$ToggleBoldFontAction#Update@ContextToolbar (com.intellij.application.options.colors.FontEditorPreview$ToggleBoldFontAction)
-2024-04-15 23:36:03,459 [   4668]   WARN - #c.i.s.ComponentManagerImpl - com.jetbrains.cidr.lang.settings.OCCustomOptionCpp initializer requests com.intellij.util.LocaleSensitiveApplicationCacheService instance
-2024-04-15 23:36:03,505 [   4714]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.database.console.session.DatabaseSessionManager initializer requests com.intellij.database.console.session.DatabaseSessionViewService instance
-2024-04-15 23:36:03,686 [   4895]   WARN - #c.i.o.a.i.ActionUpdater - 450 ms to grab EDT for ToggleAmendCommitModeAction#Update@ChangesView.CommitToolbar (com.intellij.vcs.commit.ToggleAmendCommitModeAction)
-2024-04-15 23:36:03,686 [   4895]   WARN - #c.i.o.a.i.ActionUpdater - 450 ms to grab EDT for LLMCommitMessageAction#Update@ChangesView.CommitToolbar (com.intellij.ml.llm.vcs.LLMCommitMessageAction)
-2024-04-15 23:36:03,767 [   4976]   WARN - #c.i.o.v.n.RefreshSession - no files to refresh
+2024-04-16 19:33:19,458 [    393]   WARN - #c.i.s.ComponentManagerImpl - `preload=true` must be used only for core services (service=com.intellij.ae.database.core.baseEvents.fus.AddStatisticsEventLogListenerTemporary, plugin=com.jetbrains.ae.database)
+2024-04-16 19:33:19,459 [    394]   WARN - #c.i.s.ComponentManagerImpl - `preload=true` must be used only for core services (service=com.jetbrains.rdserver.statistics.BackendStatisticsManager, plugin=com.jetbrains.codeWithMe)
+2024-04-16 19:33:19,834 [    769]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.psi.search.FilenameIndex initializer requests com.intellij.ide.plugins.PluginUtil instance
+2024-04-16 19:33:19,957 [    892]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.lang.javascript.psi.jsdoc.impl.JSDocCustomTags initializer requests com.intellij.lang.javascript.JSDisposable instance
+2024-04-16 19:33:20,295 [   1230]   WARN - #c.i.c.ComponentStoreImpl - Duplicated scheme Gradianto Dark Fuchsia - old: Gradianto Dark Fuchsia, new Gradianto Dark Fuchsia
+2024-04-16 19:33:20,299 [   1234]   WARN - #c.i.i.u.UIThemeBean - Unknown field: MainWindow.Tab
+2024-04-16 19:33:20,891 [   1826]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.psi.LanguageSubstitutors initializer requests com.intellij.psi.LanguageSubstitutors instance
+2024-04-16 19:33:21,023 [   1958]   WARN - #c.i.s.ComponentManagerImpl - org.zmlx.hg4idea.provider.HgChangeProvider initializer requests com.intellij.openapi.vcs.FileStatusFactory instance
+2024-04-16 19:33:22,015 [   2950]   WARN - #c.i.o.v.n.p.d.e.DurableEnumeratorFactory - [enumerator.mmapped]: .valueToId map is out-of-sync with .valuesLog data -> rebuilding it
+2024-04-16 19:33:22,957 [   3892]   WARN - #c.i.s.ComponentManagerImpl - com.intellij.database.console.session.DatabaseSessionManager initializer requests com.intellij.database.console.session.DatabaseSessionViewService instance
+2024-04-16 19:33:23,213 [   4148]   WARN - #c.i.o.v.n.RefreshSession - no files to refresh
 java.lang.Exception: no files to refresh
 	at com.intellij.openapi.vfs.newvfs.RefreshSessionImpl.launch(RefreshSessionImpl.java:118)
 	at com.intellij.openapi.vfs.newvfs.RefreshQueue.refresh(RefreshQueue.java:51)
@@ -67,84 +60,61 @@ java.lang.Exception: no files to refresh
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
 	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1.run(Executors.java:699)
 	at java.base/java.lang.Thread.run(Thread.java:840)
-2024-04-15 23:36:03,775 [   4984]   WARN - #c.i.o.a.i.ActionUpdater - 301 ms to grab EDT for JoinCallAction#Update@MainToolbar (com.jetbrains.rd.platform.codeWithMe.telephony.JoinCallAction)
-2024-04-15 23:36:07,803 [   9012]   WARN - #c.i.i.u.TipContentConverter - Paragraph is empty:
-<p></p>
-2024-04-15 23:36:59,204 [  60413]   WARN - #c.i.u.x.Binding - no accessors for com.intellij.ide.util.TipsUsageManager$State
-2024-04-15 23:43:07,276 [ 428485] SEVERE - #c.i.u.p.PopupFactoryImpl - Assertion failed: Do not use PsiElement for popup model. See PsiTargetNavigator
-java.lang.Throwable: Assertion failed: Do not use PsiElement for popup model. See PsiTargetNavigator
-	at com.intellij.openapi.diagnostic.Logger.assertTrue(Logger.java:469)
-	at com.intellij.ui.popup.PopupFactoryImpl.createPopupChooserBuilder(PopupFactoryImpl.java:84)
-	at com.jetbrains.rdserver.ui.popup.BackendBePopupFactory.createPopupChooserBuilder(BackendBePopupFactory.kt:200)
-	at com.intellij.codeInsight.navigation.NavigationUtil.getPsiElementPopup(NavigationUtil.kt:101)
-	at com.intellij.codeInsight.navigation.NavigationUtil.getPsiElementPopup(NavigationUtil.kt:91)
-	at com.intellij.codeInsight.navigation.NavigationUtil.getPsiElementPopup(NavigationUtil.kt:82)
-	at com.jetbrains.cidr.lang.navigation.OCGotoActionSync.navigate(OCGotoActionSync.java:87)
-	at com.jetbrains.cidr.lang.navigation.OCLineMarkerInfo.lambda$new$1(OCLineMarkerInfo.java:20)
-	at com.intellij.codeInsight.daemon.NavigateAction.actionPerformed(NavigateAction.java:47)
-	at com.intellij.openapi.actionSystem.ex.ActionUtil.doPerformActionOrShowPopup(ActionUtil.java:344)
-	at com.intellij.openapi.actionSystem.ex.ActionUtil.lambda$performActionDumbAwareWithCallbacks$4(ActionUtil.java:318)
-	at com.intellij.openapi.actionSystem.ex.ActionUtil.performDumbAwareWithCallbacks(ActionUtil.java:381)
-	at com.intellij.openapi.actionSystem.ex.ActionUtil.performActionDumbAwareWithCallbacks(ActionUtil.java:318)
-	at com.intellij.openapi.editor.impl.EditorGutterComponentImpl.performAction(EditorGutterComponentImpl.java:2333)
-	at com.intellij.openapi.editor.impl.EditorGutterComponentImpl.invokeGutterAction(EditorGutterComponentImpl.java:2274)
-	at com.intellij.openapi.editor.impl.EditorGutterComponentImpl.mouseReleased(EditorGutterComponentImpl.java:2247)
-	at com.intellij.openapi.editor.impl.EditorImpl.processMouseReleased(EditorImpl.java:2430)
-	at com.intellij.openapi.editor.impl.EditorImpl$MyMouseAdapter.lambda$runMouseReleasedCommand$1(EditorImpl.java:4162)
-	at com.intellij.openapi.command.impl.CoreCommandProcessor.executeCommand(CoreCommandProcessor.java:225)
-	at com.intellij.openapi.command.impl.CoreCommandProcessor.executeCommand(CoreCommandProcessor.java:177)
-	at com.intellij.openapi.editor.impl.EditorImpl$MyMouseAdapter.runMouseReleasedCommand(EditorImpl.java:4164)
-	at com.intellij.openapi.editor.impl.EditorImpl$MyMouseAdapter.mouseReleased(EditorImpl.java:4049)
-	at java.desktop/java.awt.AWTEventMulticaster.mouseReleased(AWTEventMulticaster.java:298)
-	at java.desktop/java.awt.Component.processMouseEvent(Component.java:6657)
-	at java.desktop/javax.swing.JComponent.processMouseEvent(JComponent.java:3385)
-	at java.desktop/java.awt.Component.processEvent(Component.java:6422)
-	at java.desktop/java.awt.Container.processEvent(Container.java:2266)
-	at java.desktop/java.awt.Component.dispatchEventImpl(Component.java:5027)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2324)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4855)
-	at java.desktop/java.awt.LightweightDispatcher.retargetMouseEvent(Container.java:4969)
-	at java.desktop/java.awt.LightweightDispatcher.processMouseEvent(Container.java:4583)
-	at java.desktop/java.awt.LightweightDispatcher.dispatchEvent(Container.java:4524)
-	at java.desktop/java.awt.Container.dispatchEventImpl(Container.java:2310)
-	at java.desktop/java.awt.Window.dispatchEventImpl(Window.java:2809)
-	at java.desktop/java.awt.Component.dispatchEvent(Component.java:4855)
-	at java.desktop/java.awt.EventQueue.dispatchEventImpl(EventQueue.java:794)
-	at java.desktop/java.awt.EventQueue$3.run(EventQueue.java:739)
-	at java.desktop/java.awt.EventQueue$3.run(EventQueue.java:733)
+2024-04-16 19:33:23,251 [   4186]   WARN - #c.i.s.ComponentManagerImpl - com.jetbrains.cidr.lang.settings.OCCustomOptionCpp initializer requests com.intellij.util.LocaleSensitiveApplicationCacheService instance
+2024-04-16 19:33:24,450 [   5385]   WARN - #o.j.p.t.TextMateService - Cannot find referenced file `./language-configuration.json` in bundle `/home/herryao/Software/clion-2023.3.4/plugins/textmate/lib/bundles/mdx`
+2024-04-16 19:33:24,585 [   5520]   WARN - #o.j.p.t.TextMateService - Cannot find referenced file `./language-configuration.json` in bundle `/home/herryao/Software/clion-2023.3.4/plugins/textmate/lib/bundles/mdx`
+2024-04-16 19:34:19,448 [  60383]   WARN - #c.i.u.x.Binding - no accessors for com.intellij.ide.util.TipsUsageManager$State
+2024-04-16 19:46:25,806 [ 786741]   WARN - org.apache.velocity.deprecation - configuration key 'resource.loader' has been deprecated in favor of 'resource.loaders'
+2024-04-16 19:46:25,807 [ 786742]   WARN - org.apache.velocity.deprecation - configuration key 'includes.resource.loader.instance' has been deprecated in favor of 'resource.loader.includes.instance'
+2024-04-16 19:46:27,731 [ 788666]   WARN - #c.i.o.v.n.RefreshSession - no files to refresh
+java.lang.Exception: no files to refresh
+	at com.intellij.openapi.vfs.newvfs.RefreshSessionImpl.launch(RefreshSessionImpl.java:118)
+	at com.intellij.openapi.vfs.newvfs.RefreshQueue.refresh(RefreshQueue.java:51)
+	at com.intellij.openapi.vfs.newvfs.RefreshQueue.refresh(RefreshQueue.java:31)
+	at com.intellij.openapi.vfs.impl.local.LocalFileSystemBase.refreshFiles(LocalFileSystemBase.java:264)
+	at com.intellij.openapi.vfs.impl.local.LocalFileSystemBase.refreshNioFiles(LocalFileSystemBase.java:259)
+	at com.intellij.openapi.externalSystem.autoimport.ProjectSettingsTracker$submitSettingsFilesRefresh$2$1.invoke(ProjectSettingsTracker.kt:169)
+	at com.intellij.openapi.externalSystem.autoimport.ProjectSettingsTracker$submitSettingsFilesRefresh$2$1.invoke(ProjectSettingsTracker.kt:166)
+	at com.intellij.openapi.externalSystem.autoimport.ProjectSettingsTracker$SettingsFilesAsyncSupplier$supply$1.invoke(ProjectSettingsTracker.kt:359)
+	at com.intellij.openapi.externalSystem.autoimport.ProjectSettingsTracker$SettingsFilesAsyncSupplier$supply$1.invoke(ProjectSettingsTracker.kt:358)
+	at com.intellij.openapi.externalSystem.autoimport.settings.CachingAsyncSupplier.supply$lambda$2(CachingAsyncSupplier.kt:19)
+	at org.jetbrains.concurrency.AsyncPromise.onSuccess$lambda$3(AsyncPromise.kt:87)
+	at com.intellij.util.concurrency.ContextBiConsumer.accept(ContextBiConsumer.java:33)
+	at org.jetbrains.concurrency.AsyncPromise$whenComplete$1.invoke(AsyncPromise.kt:114)
+	at org.jetbrains.concurrency.AsyncPromise$whenComplete$1.invoke(AsyncPromise.kt:112)
+	at org.jetbrains.concurrency.AsyncPromise.whenComplete$lambda$6(AsyncPromise.kt:112)
+	at java.base/java.util.concurrent.CompletableFuture.uniHandle(CompletableFuture.java:934)
+	at java.base/java.util.concurrent.CompletableFuture$UniHandle.tryFire(CompletableFuture.java:911)
+	at java.base/java.util.concurrent.CompletableFuture.postComplete(CompletableFuture.java:510)
+	at java.base/java.util.concurrent.CompletableFuture.complete(CompletableFuture.java:2147)
+	at org.jetbrains.concurrency.AsyncPromise.setResult(AsyncPromise.kt:188)
+	at com.intellij.openapi.externalSystem.autoimport.settings.CachingAsyncSupplier$supply$1$1$1.invoke(CachingAsyncSupplier.kt:16)
+	at com.intellij.openapi.externalSystem.autoimport.settings.CachingAsyncSupplier$supply$1$1$1.invoke(CachingAsyncSupplier.kt:15)
+	at com.intellij.openapi.externalSystem.autoimport.settings.AsyncSupplier$Companion$blocking$1.supply(AsyncSupplier.kt:19)
+	at com.intellij.openapi.externalSystem.autoimport.settings.BackgroundAsyncSupplier.supply$lambda$0(BackgroundAsyncSupplier.kt:18)
+	at com.intellij.openapi.progress.util.BackgroundTaskUtil.lambda$submitTask$8(BackgroundTaskUtil.java:266)
+	at com.intellij.openapi.progress.util.BackgroundTaskUtil.lambda$createBackgroundTask$10(BackgroundTaskUtil.java:302)
+	at com.intellij.openapi.progress.ProgressManager.lambda$runProcess$0(ProgressManager.java:73)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.lambda$runProcess$1(CoreProgressManager.java:192)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.lambda$executeProcessUnderProgress$12(CoreProgressManager.java:610)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.registerIndicatorAndRun(CoreProgressManager.java:685)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.computeUnderProgress(CoreProgressManager.java:641)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.executeProcessUnderProgress(CoreProgressManager.java:609)
+	at com.intellij.openapi.progress.impl.ProgressManagerImpl.executeProcessUnderProgress(ProgressManagerImpl.java:78)
+	at com.intellij.openapi.progress.impl.CoreProgressManager.runProcess(CoreProgressManager.java:179)
+	at com.intellij.openapi.progress.ProgressManager.runProcess(ProgressManager.java:73)
+	at com.intellij.openapi.progress.util.BackgroundTaskUtil.lambda$createBackgroundTask$11(BackgroundTaskUtil.java:297)
+	at java.base/java.util.concurrent.CompletableFuture$AsyncSupply.run(CompletableFuture.java:1768)
+	at com.intellij.util.concurrency.ContextRunnable.run(ContextRunnable.java:27)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.doRun(BoundedTaskExecutor.java:244)
+	at com.intellij.util.concurrency.BoundedTaskExecutor.access$200(BoundedTaskExecutor.java:30)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.executeFirstTaskAndHelpQueue(BoundedTaskExecutor.java:222)
+	at com.intellij.util.ConcurrencyUtil.runUnderThreadName(ConcurrencyUtil.java:218)
+	at com.intellij.util.concurrency.BoundedTaskExecutor$1.run(BoundedTaskExecutor.java:210)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:702)
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1$1.run(Executors.java:699)
 	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:97)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:766)
-	at java.desktop/java.awt.EventQueue$4.run(EventQueue.java:764)
-	at java.base/java.security.AccessController.doPrivileged(AccessController.java:399)
-	at java.base/java.security.ProtectionDomain$JavaSecurityAccessImpl.doIntersectionPrivilege(ProtectionDomain.java:86)
-	at java.desktop/java.awt.EventQueue.dispatchEvent(EventQueue.java:763)
-	at com.intellij.ide.IdeEventQueue.defaultDispatchEvent(IdeEventQueue.kt:695)
-	at com.intellij.ide.IdeEventQueue.dispatchMouseEvent(IdeEventQueue.kt:635)
-	at com.intellij.ide.IdeEventQueue._dispatchEvent$lambda$10(IdeEventQueue.kt:580)
-	at com.intellij.openapi.application.impl.RwLockHolder.runWithEnabledImplicitRead(RwLockHolder.kt:75)
-	at com.intellij.openapi.application.impl.RwLockHolder.runWithImplicitRead(RwLockHolder.kt:67)
-	at com.intellij.ide.IdeEventQueue._dispatchEvent(IdeEventQueue.kt:580)
-	at com.intellij.ide.IdeEventQueue.access$_dispatchEvent(IdeEventQueue.kt:72)
-	at com.intellij.ide.IdeEventQueue$dispatchEvent$processEventRunnable$1$1$1.compute(IdeEventQueue.kt:355)
-	at com.intellij.ide.IdeEventQueue$dispatchEvent$processEventRunnable$1$1$1.compute(IdeEventQueue.kt:354)
-	at com.intellij.openapi.progress.impl.CoreProgressManager.computePrioritized(CoreProgressManager.java:793)
-	at com.intellij.ide.IdeEventQueue$dispatchEvent$processEventRunnable$1$1.invoke(IdeEventQueue.kt:354)
-	at com.intellij.ide.IdeEventQueue$dispatchEvent$processEventRunnable$1$1.invoke(IdeEventQueue.kt:349)
-	at com.intellij.ide.IdeEventQueueKt.performActivity$lambda$1(IdeEventQueue.kt:1014)
-	at com.intellij.openapi.application.TransactionGuardImpl.performActivity(TransactionGuardImpl.java:114)
-	at com.intellij.ide.IdeEventQueueKt.performActivity(IdeEventQueue.kt:1014)
-	at com.intellij.ide.IdeEventQueue.dispatchEvent$lambda$7(IdeEventQueue.kt:349)
-	at com.intellij.openapi.application.impl.ApplicationImpl.runIntendedWriteActionOnCurrentThread(ApplicationImpl.java:848)
-	at com.intellij.ide.IdeEventQueue.dispatchEvent(IdeEventQueue.kt:391)
-	at java.desktop/java.awt.EventDispatchThread.pumpOneEventForFilters(EventDispatchThread.java:207)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForFilter(EventDispatchThread.java:128)
-	at java.desktop/java.awt.EventDispatchThread.pumpEventsForHierarchy(EventDispatchThread.java:117)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:113)
-	at java.desktop/java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:105)
-	at java.desktop/java.awt.EventDispatchThread.run(EventDispatchThread.java:92)
-2024-04-15 23:43:07,280 [ 428489] SEVERE - #c.i.u.p.PopupFactoryImpl - CLion 2023.3.4  Build #CL-233.14475.31
-2024-04-15 23:43:07,280 [ 428489] SEVERE - #c.i.u.p.PopupFactoryImpl - JDK: 17.0.10; VM: OpenJDK 64-Bit Server VM; Vendor: JetBrains s.r.o.
-2024-04-15 23:43:07,280 [ 428489] SEVERE - #c.i.u.p.PopupFactoryImpl - OS: Linux
-2024-04-15 23:43:07,281 [ 428490] SEVERE - #c.i.u.p.PopupFactoryImpl - Current Command: 
+	at java.base/java.util.concurrent.Executors$PrivilegedThreadFactory$1.run(Executors.java:699)
+	at java.base/java.lang.Thread.run(Thread.java:840)

@@ -9,13 +9,13 @@ namespace DTLib
 {
     void *Object::operator new(size_t size) noexcept
     {
-        std::cout << "Object::operator new: " << size << std::endl;
+//        std::cout << "Object::operator new: " << size << std::endl;
         return malloc(size);
     }
 
     void Object::operator delete(void *p)
     {
-        std::cout << "Object::operator delete: " << p << std::endl;
+//        std::cout << "Object::operator delete: " << p << std::endl;
         free(p);
     }
 

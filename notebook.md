@@ -3346,5 +3346,588 @@
   - 头节点用于辅助数据元素的定位，方便插入和删除操作
   - 插入和删除操作需要保证链表的完整性
 
- 
+
+
+## 第二十二课：单链表的具体实现
+
+- 课程目标：
+
+  - 完成链式存储结构线性表的实现
+  - Object <– List <– LinkList
+
+- LinkList设计要点
+
+  - 类模板，通过头节点访问后继节点
+  - 定义内部节点类型Node，用于描述数据域和指针域
+  - 实现线性表的关键操作（增，删，查等）
+
+-  LinkList的声明：
+
+- ```cpp
+  template<typename T>
+  class LinkList: public List<T>
+  {
+  protected:
+      //类内定义另外一个类
+      struct Node: public Object
+      {
+          //数据域
+          T value;
+          //指针域
+          Node* next;
+      }
+      //头节点
+      Node m_header;
+      int m_length;
+  public:
+      LinkList();
+      //......
+  };
+  ```
+
+- 编程实验一：LinkList类的实现
+
+- 注意在get中遍历节点时获取了成员的地址，这会造成编译器的报错，解决方法使用`mutable`关键字
+
+- 注意重载代码简略写法，直接调用已经实现的版本`insert()`以及`get()`重载中有所体现。
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : LinkList.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/16/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_LINKLIST_H
+  #define DTLIB_LINKLIST_H
+  #include "List.h"
+  
+  
+  namespace DTLib
+  {
+      template <typename T>
+      class LinkList: public List<T>
+      {
+      protected:
+         struct Node: public Object
+         {
+            T value;
+            Node* next;
+         };
+         //为了防止出现在const函数中出现类型转换的问题
+         mutable Node  m_header;
+         int m_length;
+  
+      public:
+         LinkList()
+         {
+            this->m_length = 0;
+            this->m_header.next = nullptr;
+         }
+  
+         bool insert(const T& e)
+         {
+            return insert(this->m_length, e);
+         }
+  
+         bool insert(int i, const T& e)
+         {
+            bool ret = ((i>=0)&&(i<=this->m_length));
+  
+            if(ret)
+            {
+               Node* node = new Node;
+               if(node != nullptr)
+               {
+                  Node* current = &this->m_header;
+                  for(int p=0; p<i; ++p)
+                  {
+                     current = current->next;
+                  }
+                  node->next = current->next;
+                  node->value = e;
+                  current->next = node;
+  
+                  this->m_length++;
+               }
+               else
+               {
+                  THROW_EXCEPTION(NoEnoughMemoryException,"Failed in insert LinkList...");
+               }
+            }
+            return ret;
+         }
+         bool remove(int i)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               Node* current = &this->m_header;
+               for(int p=0; p<i; ++p)
+               {
+                  current = current->next;
+               }
+               auto toDel = current->next;
+               current->next = toDel->next;
+               this->m_length--;
+               delete toDel;
+            }
+            return ret;
+         }
+         bool set(int i, const T& e)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            if(ret)
+            {
+               Node* current = &this->m_header;
+               for(int p=0; p<i; ++p)
+               {
+                  current = current->next;
+               }
+  
+               current->next->value = e;
+            }
+            return ret;
+         }
+  
+         T get(int i) const
+         {
+            T ret;
+            if(get(i, ret))
+            {
+               return ret;
+            }
+            else
+            {
+               THROW_EXCEPTION(IndexOutOfBoundsException, "Invalid parameter used here ......");
+            }
+         }
+         bool get(int i, T& e) const
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               //如果在一个const函数中获取一个成员的地址
+               //如果获取地址就存在篡改常量的可能
+               //被认为有可能会修改成员变量的值
+               //解决方法，将相关的成员声明为mutable
+               //此时编译器就会允许在一个const的函数中获取一个成员变量的地址了
+               //maybe the const pointer can be changed in a const function
+               //也可以使用常量的强制转换
+  //           Node* current = const_cast<Node*>(&this->m_header);
+               Node* current = &this->m_header;
+               for(int p=0; p<i; ++p)
+               {
+                  current = current->next;
+               }
+  
+               e = current->next->value;
+            }
+            return ret;
+         }
+  
+         int length() const
+         {
+            return this->m_length;
+         }
+  
+         void clear()
+         {
+  
+            while(this->m_header.next != nullptr)
+            {
+               auto toDel = this->m_header.next;
+               this->m_header.next = toDel->next;
+               delete toDel;
+            }
+            this->m_length = 0;
+         }
+  
+         //destructor
+         ~LinkList()
+         {
+            clear();
+         }
+  
+      };
+  }
+  #endif //DTLIB_LINKLIST_H
+  ```
+
+- 测试用代码：
+
+- ```cpp
+  #include <iostream>
+  
+  #include "SmartPointer.h"
+  #include "Exception.h"
+  #include "Object.h"
+  #include "List.h"
+  #include "SeqList.h"
+  #include "StaticList.h"
+  #include "DynamicList.h"
+  #include "StaticArray.h"
+  #include "DynamicArray.h"
+  #include "LinkList.h"
+  
+  
+  using namespace DTLib;
+  
+  void test_4_link_list();
+  
+  int main()
+  {
+  //    test_4_sp();
+  //    test_4_exception();
+  //    test_4_obj();
+  //    test_4_single_tree();
+  //	test_4_list_00();
+  //	test_4_SeqList_00();
+  //	test_4_StaticList_00();
+  //	test_4_DynamicList_00();
+  //	test_4_cp_List();
+  //	test_4_insert_back();
+  //	test_4_static_array();
+  //	test_4_dynamic_array();
+  	test_4_link_list();
+  
+  	return 0;
+  }
+  
+  void test_4_link_list()
+  {
+  	LinkList<int> list;
+  	for(int i=0; i<5; ++i)
+  	{
+  		list.insert(0, i);
+  //		list.insert(i);
+  		list.set(0, i*i);
+  	}
+  
+  	for(int i=0; i<list.length(); ++i)
+  	{
+  //		int v=0;
+  //		list.get(i,v);
+  //		std::cout << v << std::endl;
+  		std::cout << list.get(i) << std::endl;
+  	}
+  	list.remove(2);
+  	for(int i=0; i<list.length(); ++i)
+  	{
+  		std::cout << list.get(i) << std::endl;
+  	}
+  	list.clear();
+  	for(int i=0; i<list.length(); ++i)
+  	{
+  		std::cout << list.get(i) << std::endl;
+  	}
+  }
+  
+  ```
+
+- 问题：
+
+  - 头节点是否存在隐患？
+  - 实现代码是否需要优化？
+
+- ==头节点隐患==
+
+- ```cpp
+  template <typename T>
+  class LinkedList: public List<T>
+  {
+  protected:
+      struct Node: public Object
+  	{
+  		T value;
+      	Node* next;
+  	};
+  	Node m_header;
+      //......
+  };
+  
+  class Test
+  {
+  public:
+      Test()
+      {
+          //constructor
+          throw 0;
+      }
+  };
+  
+  LinkList<Test> list;	//出现异常无法处理
+  ```
+
+- 出现问题的原因是在LinkList中有一个成员变量`Node`
+
+- 在构造`LinkList`对象时`Node`的构造函数调用，这会构造其内部元素`T value`进而调用了`class Test`的构造函数，抛出了异常，尽管并没有显示地创建T类型的对象。
+
+- 其实这是使用用户犯下的错误，但是为了避免这一问题，可以使用匿名结构体的方式来解决。
+
+- ```cpp
+  mutable Node m_header;
+  mutable struct{
+      char reserved[sizeof(T)];
+      Node* next; 
+  } m_header;
+  ```
+
+- 报错：下面定义无法实现，因为m_header是`DTLib::LinkList<int>::<unnamed struct>*`类型，需要使用`reinterpret_cast<Node*>`进行强制类型转换。
+
+- ```
+  //Node* current =&this->m_header;
+  Node* current = reinterpret_cast<Node*>(&this->m_header);
+  ```
+
+- 在`get()`， `set()`， `insert()`， `remove()`中军存在大量重复的用于寻址的代码
+
+- ```cpp
+  Node* current = &this->m_header;
+  for(int p=0; p<i; p++)
+  {
+      current = current->next;
+  }
+  ```
+
+- 将其封装成一个保护成员函数以简化接口中的重复代码
+
+- 此外在`get() const`函数中调用一个非const函数`position()`是不允许的，因此此函数也需要声明成一个const类型的函数。
+
+- ```cpp
+  Node* position(int i) const
+  {
+  	Node* current = reinterpret_cast<Node*>(&this->m_header);
+  	for(int p=0; p<i; p++)
+  	{
+  		current = current->next;
+  	}
+  	return current;
+  }
+  ```
+
+- 修改之后经过测试代码发现可以正常运行。直到真正创建Test类对象
+
+- ```cpp
+  void test_4_link_list_2()
+  {
+      class Test
+      {
+      public:
+         Test()
+         {
+            //constructor
+            throw 0;
+         }
+      };
+      LinkList<Test> list;
+      Test t;
+      list.insert(t);
+      std::cout << "D.T.Lib" << std::endl;
+  
+  }
+  ```
+
+- 在修改之后的代码继续运行之前的测试用例，发现出现段错误
+
+- ```
+  /home/herryao/cs/DT/DTLib/DTLIb/cmake-build-debug/DTLIb
+  16
+  
+  Process finished with exit code 139 (interrupted by signal 11:SIGSEGV)
+  ```
+
+- 因为我们为了在避免在实例化数据结构直接调用T的构造函数。但是我们使用了匿名结构体，他并不是继承自Object类的，这会造成内存布局错误，因此导致了上述问题。所以在匿名结构体的声明必须继承自Object以达到，完全一致的内存布局
+
+- 最终修改后的代码如下所示，通过了所有的测试代码
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : LinkList.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/16/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_LINKLIST_H
+  #define DTLIB_LINKLIST_H
+  #include "List.h"
+  
+  
+  namespace DTLib
+  {
+  	template <typename T>
+  	class LinkList: public List<T>
+  	{
+  	protected:
+  		struct Node: public Object
+  		{
+  			T value;
+  			Node* next;
+  		};
+  		//为了防止出现在const函数中出现类型转换的问题
+  //		mutable Node  m_header;
+  		//不再显示调用构造函数，而是采用匿名结构体构造和原来
+  		//Node类型对象相同的内存分布，但并不会调用T的构造函数
+  		//而是预留空间
+  		mutable struct: public Object{
+  			char reserved[sizeof(T)];
+  			Node* next;
+  		} m_header;
+  		int m_length;
+  
+  		Node* position(int i) const
+  		{
+  //			Node* current =&this->m_header;
+  			Node* current = reinterpret_cast<Node*>(&this->m_header);
+  			for(int p=0; p<i; p++)
+  			{
+  				current = current->next;
+  			}
+  			return current;
+  		}
+  
+  	public:
+  
+  		LinkList()
+  		{
+  			this->m_length = 0;
+  			this->m_header.next = nullptr;
+  		}
+  
+  		bool insert(const T& e)
+  		{
+  			return insert(this->m_length, e);
+  		}
+  
+  		bool insert(int i, const T& e)
+  		{
+  			bool ret = ((i>=0)&&(i<=this->m_length));
+  
+  			if(ret)
+  			{
+  				Node* node = new Node;
+  				if(node != nullptr)
+  				{
+  					Node* current = position(i);
+  					node->next = current->next;
+  					node->value = e;
+  					current->next = node;
+  
+  					this->m_length++;
+  				}
+  				else
+  				{
+  					THROW_EXCEPTION(NoEnoughMemoryException,"Failed in insert LinkList...");
+  				}
+  			}
+  			return ret;
+  		}
+  		bool remove(int i)
+  		{
+  			int ret = ((i>=0)&&(i<this->m_length));
+  			ret = ret && (this->m_length > 0);
+  			if(ret)
+  			{
+  				Node* current = position(i);
+  				auto toDel = current->next;
+  				current->next = toDel->next;
+  				this->m_length--;
+  				delete toDel;
+  			}
+  			return ret;
+  		}
+  		bool set(int i, const T& e)
+  		{
+  			int ret = ((i>=0)&&(i<this->m_length));
+  			if(ret)
+  			{
+  				position(i)->next->value = e;
+  			}
+  			return ret;
+  		}
+  
+  		T get(int i) const
+  		{
+  			T ret;
+  			if(get(i, ret))
+  			{
+  				return ret;
+  			}
+  			else
+  			{
+  				THROW_EXCEPTION(IndexOutOfBoundsException, "Invalid parameter used here ......");
+  			}
+  		}
+  		bool get(int i, T& e) const
+  		{
+  			int ret = ((i>=0)&&(i<this->m_length));
+  			ret = ret && (this->m_length > 0);
+  			if(ret)
+  			{
+  				//如果在一个const函数中获取一个成员的地址
+  				//如果获取地址就存在篡改常量的可能
+  				//被认为有可能会修改成员变量的值
+  				//解决方法，将相关的成员声明为mutable
+  				//此时编译器就会允许在一个const的函数中获取一个成员变量的地址了
+  				//maybe the const pointer can be changed in a const function
+  				//也可以使用常量的强制转换
+  //				Node* current = const_cast<Node*>(&this->m_header);
+  //				Node* current = position(i);
+  //				e = current->next->value;
+  
+  				e = position(i)->next->value;
+  			}
+  			return ret;
+  		}
+  
+  		int length() const
+  		{
+  			return this->m_length;
+  		}
+  
+  		void clear()
+  		{
+  
+  			while(this->m_header.next != nullptr)
+  			{
+  				auto toDel = this->m_header.next;
+  				this->m_header.next = toDel->next;
+  				delete toDel;
+  			}
+  			this->m_length = 0;
+  		}
+  
+  		//destructor
+  		~LinkList()
+  		{
+  			clear();
+  		}
+  
+  	};
+  }
+  #endif //DTLIB_LINKLIST_H
+  
+  ```
+
+- 小结
+  - 通过类模板实现链表，包含头节点成员和长度成员
+  - 定义节点类型，并通过对中的节点对象构成链式存储
+  - 为了避免构造产生异常的隐患，头节点类型成员在类内声明为了匿名结构体类型
+    - 相同的需要使用mutable关键字来在const函数中获取其地址
+    - 必须有相同的继承关系来保证绝对的内存一致布局，否则会造成段错误
+    - 使用了`reinterpret_cast`进行了强制类型转换
+  - 代码优化是变成完成后必不可少的环节，将封装好的代码一般给予较低权限，使得暴露给用户的借口尽可能简洁
+  - 在进行代码优化后必须全部重新测试
+
+## 第二十三课：顺序表和单链表的对比分析
 

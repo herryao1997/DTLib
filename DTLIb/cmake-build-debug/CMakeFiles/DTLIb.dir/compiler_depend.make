@@ -374,6 +374,7 @@ CMakeFiles/DTLIb.dir/main.cpp.o: /home/herryao/cs/DT/DTLib/DTLIb/main.cpp \
   /home/herryao/cs/DT/DTLib/DTLIb/DynamicArray.h \
   /home/herryao/cs/DT/DTLib/DTLIb/DynamicList.h \
   /home/herryao/cs/DT/DTLib/DTLIb/Exception.h \
+  /home/herryao/cs/DT/DTLib/DTLIb/LinkList.h \
   /home/herryao/cs/DT/DTLib/DTLIb/List.h \
   /home/herryao/cs/DT/DTLib/DTLIb/Object.h \
   /home/herryao/cs/DT/DTLib/DTLIb/SeqList.h \
@@ -568,6 +569,8 @@ CMakeFiles/DTLIb.dir/main.cpp.o: /home/herryao/cs/DT/DTLib/DTLIb/main.cpp \
 /home/herryao/cs/DT/DTLib/DTLIb/SeqList.h:
 
 /home/herryao/cs/DT/DTLib/DTLIb/List.h:
+
+/home/herryao/cs/DT/DTLib/DTLIb/LinkList.h:
 
 /home/herryao/cs/DT/DTLib/DTLIb/DynamicArray.h:
 
