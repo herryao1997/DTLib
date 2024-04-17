@@ -17,4 +17,5 @@ add_executable(DTLIb main.cpp
         StaticArray.h
         DynamicArray.h
         LinkList.h
+        StaticLinkList.h
 )

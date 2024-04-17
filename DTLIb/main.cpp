@@ -60,6 +60,8 @@ void test_4_static_array();
 void test_4_dynamic_array();
 void test_4_link_list();
 void test_4_link_list_2();
+void test_4_list_find();
+void test_4_fast_looping();
 
 int main()
 {
@@ -75,8 +77,10 @@ int main()
 //	test_4_insert_back();
 //	test_4_static_array();
 //	test_4_dynamic_array();
-	test_4_link_list();
+//	test_4_link_list();
 //	test_4_link_list_2();
+//	test_4_list_find();
+	test_4_fast_looping();
 	return 0;
 }
 
@@ -340,12 +344,12 @@ void test_4_link_list()
 		std::cout << list.get(i) << std::endl;
 	}
 
-	class Test
+	class Test:public Object
 	{
 	public:
 		Test()
 		{
-			//constructor
+		//constructor
 			throw 0;
 		}
 	};
@@ -355,7 +359,7 @@ void test_4_link_list()
 
 void test_4_link_list_2()
 {
-	class Test
+	class Test: public Object
 	{
 	public:
 		Test()
@@ -369,4 +373,52 @@ void test_4_link_list_2()
 	list.insert(t);
 	std::cout << "D.T.Lib" << std::endl;
 
+}
+
+void test_4_list_find()
+{
+	LinkList<int> list;
+	for(int i=0; i<5; ++i)
+	{
+		list.insert(i);
+	}
+	std::cout << list.find(3) << std::endl;
+	class Test: public Object
+	{
+	protected:
+		int i;
+	public:
+		Test(int v = 0)
+		{
+			i = v;
+		}
+		bool operator==(const Test& other) const
+		{
+			return (i == other.i);
+		}
+	};
+
+	LinkList<Test> list_1;
+	for(int i=0; i<5; ++i)
+	{
+		list_1.insert(0, Test(i));
+	}
+	Test it(58);
+	std::cout << list_1.find(it) << std::endl;
+}
+
+void test_4_fast_looping()
+{
+	LinkList<int> list;
+	for(int i=0; i<5; ++i)
+	{
+		list.insert(0,i);
+	}
+	//move the iterator to the original point
+
+	for(list.move(0, 10); !list.end(); list.next())	//O(n)
+	{
+		std::cout << list.current() << "\t";
+	}
+	std::cout << std::endl;
 }

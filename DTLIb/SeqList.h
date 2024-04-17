@@ -37,9 +37,27 @@ namespace DTLib
 
 		T operator[](int i) const;
 
+		int find(const T& e) const;
+
 		void clear();
 		virtual int capacity() const = 0;
 	};
+
+	template<typename T>
+	int SeqList<T>::find(const T &e) const	//O(n)
+	{
+		int ret = -1;
+		for(int i=0; i<this->m_length; ++i)
+		{
+			if(this->m_array[i] == e)
+			{
+				ret = i;
+				break;
+			}
+		}
+		return ret;
+	}
+
 
 	template<typename T>
 	bool SeqList<T>::insert(const T &e) {

@@ -34,6 +34,9 @@ namespace DTLib
 			Node* next;
 		} m_header;
 		int m_length;
+		int m_step;
+		Node* m_current;
+
 
 		Node* position(int i) const
 		{
@@ -46,12 +49,25 @@ namespace DTLib
 			return current;
 		}
 
+		virtual Node* create()
+		{
+			return new Node();
+		}
+
+		virtual void destroy(Node* pn)
+		{
+			delete pn;
+		}
+
+
 	public:
 
 		LinkList()
 		{
 			this->m_length = 0;
 			this->m_header.next = nullptr;
+			this->m_step = 1;
+			this->m_current = nullptr;
 		}
 
 		bool insert(const T& e)
@@ -65,7 +81,7 @@ namespace DTLib
 
 			if(ret)
 			{
-				Node* node = new Node;
+				Node* node = create();
 				if(node != nullptr)
 				{
 					Node* current = position(i);
@@ -92,7 +108,7 @@ namespace DTLib
 				auto toDel = current->next;
 				current->next = toDel->next;
 				this->m_length--;
-				delete toDel;
+				destroy(toDel);
 			}
 			return ret;
 		}
@@ -152,15 +168,74 @@ namespace DTLib
 			{
 				auto toDel = this->m_header.next;
 				this->m_header.next = toDel->next;
-				delete toDel;
+				destroy(toDel);
 			}
 			this->m_length = 0;
 		}
+
+		//find
+		int find(const T& e) const	//O(n)
+		{
+			int ret = -1;
+			Node* current = reinterpret_cast<Node *>(&this->m_header);
+			for(int i=0; i<this->m_length; ++i)
+			{
+				current = current->next;
+				if(current->value == e)
+				{
+					ret = i;
+					break;
+				}
+			}
+			return ret;
+		}
+
 
 		//destructor
 		~LinkList()
 		{
 			clear();
+		}
+
+		//fast looping related functions
+
+		bool move(int i, int step=1)
+		{
+			bool ret = ((0 <= i) && (i < this->m_length) && (step > 0));
+			if(ret)
+			{
+				this->m_current = position(i)->next;
+				m_step = step;
+			}
+			return ret;
+		}
+
+		bool next()
+		{
+			int i = 0;
+			while((i<this->m_step)&&!this->end())
+			{
+				this->m_current = this->m_current->next;
+				++i;
+			}
+			return (i == this->m_step);
+		}
+
+		bool end()
+		{
+			return (this->m_current == nullptr);
+		}
+
+		T current()
+		{
+			if(!this->end())
+			{
+				return this->m_current->value;
+			}
+			else
+			{
+				THROW_EXCEPTION(InValidOperationException, "No value at current position... ");
+			}
 		}
 
 	};

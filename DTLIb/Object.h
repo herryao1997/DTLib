@@ -14,6 +14,8 @@ namespace DTLib {
         void operator delete(void* p);
         void* operator new[](size_t size) noexcept;
         void operator delete[](void* p);
+		bool operator ==(const Object& obj) const;
+		bool operator !=(const Object& obj) const;
         //顶层类是抽象类型
         virtual ~Object() = 0;
     };

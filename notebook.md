@@ -3669,6 +3669,8 @@
 
 - 在构造`LinkList`对象时`Node`的构造函数调用，这会构造其内部元素`T value`进而调用了`class Test`的构造函数，抛出了异常，尽管并没有显示地创建T类型的对象。
 
+- 解决办法，在避免在容器的构造函数中直接构建模板成员，从而不会一开始在创建容器对象时调用类成员的构造函数。
+
 - 其实这是使用用户犯下的错误，但是为了避免这一问题，可以使用匿名结构体的方式来解决。
 
 - ```cpp
@@ -3931,3 +3933,847 @@
 
 ## 第二十三课：顺序表和单链表的对比分析
 
+- 问题：如何判断某个数据是否存在于线性表中？
+
+  - 遍历比较
+  - 封装查找函数
+
+- 遗失的操作-find
+
+- 可以为线性表（List）添加一个查找函数
+
+- int find(const T&e);
+
+  - 参数：
+    - 待查找的数据元素
+  - 返回值：
+    - `>= 0` 数据元素在线性表中第一次出现的位置
+    - `-1` 数据元素不存在
+
+  - ```cpp
+    LinkList<int> list;
+    for(int i=0; i<5; ++i)
+    {
+    	list.insert(i);
+    }
+    std::cout << list.find(3) << std::endl;	// ==>1
+    ```
+
+- 编程实验一：find函数的实现
+
+- List.h中的声明：
+
+- ```cpp
+  template<typename T>
+  class List :public Object
+  {
+  public:
+  //查找函数
+  	virtual int find(const T& e) const= 0;
+  };
+  
+  ```
+
+- SeqList.h中的实现
+
+- ```cpp
+  template<typename T>
+  int SeqList<T>::find(const T &e) const	//O(n)
+  {
+  	int ret = -1;
+  	for(int i=0; i<this->m_length; ++i)
+  	{
+  		if(this->m_array[i] == e)
+  		{
+  			ret = i;
+  			break;
+  		}
+  	}
+  	return ret;
+  }
+  ```
+
+- LinkList.h中的实现
+
+- ```
+  //find
+  template<typename T>
+  int LinkList<T>::find(const T &e) const	//O(n)
+  {
+      int ret = -1;
+      Node* current = reinterpret_cast<Node *>(&this->m_header);
+      for(int i=0; i<this->m_length; ++i)
+      {
+         current = current->next;
+         if(current->value == e)
+         {
+            ret = i;
+            break;
+         }
+      }
+      return ret;
+  }
+  ```
+
+- 如果使用自定义类类型会导致`operator ==`的未定义编译错误
+
+- 要求必须定义`==`操作符号的重载
+
+- 解决办法：
+
+  - 在库父类Object中定义默认的`== 和 !=`的操作符重载
+  - 测试使用的自定义类需要继承自Object类
+
+- 测使用代码如下，其中包含了自定义类型的查找：
+
+- ```cpp
+  
+  #include <iostream>
+  
+  #include "SmartPointer.h"
+  #include "Exception.h"
+  #include "Object.h"
+  #include "List.h"
+  #include "SeqList.h"
+  #include "StaticList.h"
+  #include "DynamicList.h"
+  #include "StaticArray.h"
+  #include "DynamicArray.h"
+  #include "LinkList.h"
+  
+  
+  using namespace DTLib;
+  void test_4_list_find();
+  
+  int main()
+  {
+  //    test_4_sp();
+  //    test_4_exception();
+  //    test_4_obj();
+  //    test_4_single_tree();
+  //	test_4_list_00();
+  //	test_4_SeqList_00();
+  //	test_4_StaticList_00();
+  //	test_4_DynamicList_00();
+  //	test_4_cp_List();
+  //	test_4_insert_back();
+  //	test_4_static_array();
+  //	test_4_dynamic_array();
+  //	test_4_link_list();
+  //	test_4_link_list_2();
+  	test_4_list_find();
+  	return 0;
+  }
+  
+  
+  void test_4_list_find()
+  {
+  	LinkList<int> list;
+  	for(int i=0; i<5; ++i)
+  	{
+  		list.insert(i);
+  	}
+  	std::cout << list.find(3) << std::endl;
+  	class Test: public Object
+  	{
+  	protected:
+  		int i;
+  	public:
+  		Test(int v = 0)
+  		{
+  			i = v;
+  		}
+  		bool operator==(const Test& other) const
+  		{
+  			return (i == other.i);
+  		}
+  	};
+  
+  	LinkList<Test> list_1;
+  	for(int i=0; i<5; ++i)
+  	{
+  		list_1.insert(0, Test(i));
+  	}
+  	Test it(58);
+  	std::cout << list_1.find(it) << std::endl;
+  }
+  ```
+
+- 顺序表和单链表的时间复杂度对比分析
+
+- | 操作   | SeqList | LinkList |
+  | ------ | ------- | -------- |
+  | insert | O(n)    | O(n)     |
+  | remove | O(n)    | O(n)     |
+  | find   | O(n)    | O(n)     |
+  | get    | O(1)    | O(n)     |
+  | set    | O(1)    | O(n)     |
+  | length | O(1)    | O(1)     |
+  | clear  | O(1)    | O(n)     |
+
+- 顺序表整体时间复杂度比单链表要低，那么单链表还有使用的价值么？
+
+- 效率的深度分析
+
+  - 实际工程开发中，时间复杂度只是效率的一个参考指标
+    - 对于内置基础类型，顺序表和单链表的效率不相上下
+    - 对于自定义类类型，顺序表效率上低于单链表
+
+- 插入和删除操作：
+
+  - 顺序表：涉及大量数据对象的复制操作
+  - 单链表：只涉及指针操作，效率与数据对象无关
+
+- 数据访问
+
+  - 顺序表：随机访问，可以直接定位数据对象
+  - 单链表：顺序访问，必须从头访问数据对象，无法直接定位
+
+- 工程开发中的选择
+
+  - 顺序表
+    - 数据元素类型相对简单，不涉及深拷贝
+    - 数据元素相对稳定，访问操作远多于插入和删除的操作
+  - 单链表
+    - 数据元素的类型相对复杂，复制操作相对耗时
+    - 数据元素不稳定，需要大量的插入和删除操作，访问操作较少
+
+- 小结
+
+  -  在查找方法中，会调用相等操作符号，为了解决这一问题在顶层父类中给定了默认的比较判断符号重载，相应的在使用自定义类型，也应当继承自顶层父类，从而防止相关问题的发生
+  - 线性表中元素的查找依赖于相等比较操作符
+  - 顺序表适用于访问需求量较大的场合
+  - 单链表适用于数据元素频繁插入和删除的场合
+  - 当数据类型相对简单时，顺序表和单链表的效率不相上下
+
+## 第二十四课：单链表的遍历与优化
+
+- 如何遍历单链表中的每一个数据元素？
+
+- ```cpp
+  LinkList <int> list;
+  
+  for(int i=0; i<5; ++i)	//O(n)
+  {
+      list.insert(0, i);	//O(1)
+  }
+  
+  
+  for(int i=0; i<list.length(); ++i)	//O(n)
+  {
+      std::cout << list.get(i) << std::endl;	//O(n)
+  }
+  
+  //O(n2) + O(n)
+  ```
+
+- 遗憾的事实
+
+  - 插入实现线性的时间复杂度，但是遍历并不是线性的时间复杂度
+
+- 新的需求
+
+  - 单链表提供新的方法，在线性时间内完成遍历
+
+- 设计思路：
+
+  - 在单链表内部定义一个游标（`Node* m_current`）
+  - 遍历开始前将游标置第一个数据元素
+  - 获取游标指向的数据元素
+  - 通过节点中的next指针移动游标
+
+- 实现方式：提供一族遍历相关的函数，以线性的时间复杂度遍历链表
+
+  - | 函数      | 功能说明                     |
+    | --------- | ---------------------------- |
+    | move()    | 将游标定义到目标位置         |
+    | next()    | 移动游标                     |
+    | current() | 获取游标所指向的数据元素     |
+    | end()     | 游标是否达到尾部（是否为空） |
+
+  - 函数设计原型
+
+  - ```cpp
+    bool move(int i, int step=1);
+    bool next();
+    bool end();
+    T current();
+    ```
+
+- 编程实验一：快速遍历相关函数的实现
+
+- 添加了两个新的成员变量用于表示当前的游标，以及当前的步长，相应地，也应在构造函数之中对其进行初始化。
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : LinkList.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/16/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_LINKLIST_H
+  #define DTLIB_LINKLIST_H
+  #include "List.h"
+  
+  
+  namespace DTLib
+  {
+      template <typename T>
+      class LinkList: public List<T>
+      {
+      protected:
+         struct Node: public Object
+         {
+            T value;
+            Node* next;
+         };
+         mutable struct: public Object{
+            char reserved[sizeof(T)];
+            Node* next;
+         } m_header;
+         int m_length;
+         int m_step;
+         Node* m_current;
+  
+  
+         Node* position(int i) const
+         {
+            Node* current = reinterpret_cast<Node*>(&this->m_header);
+            for(int p=0; p<i; p++)
+            {
+               current = current->next;
+            }
+            return current;
+         }
+  
+      public:
+  
+         LinkList()
+         {
+            this->m_length = 0;
+            this->m_header.next = nullptr;
+            this->m_step = 1;
+            this->m_current = nullptr;
+         }
+  
+         bool insert(const T& e)
+         {
+            return insert(this->m_length, e);
+         }
+  
+         bool insert(int i, const T& e)
+         {
+            bool ret = ((i>=0)&&(i<=this->m_length));
+  
+            if(ret)
+            {
+               Node* node = new Node;
+               if(node != nullptr)
+               {
+                  Node* current = position(i);
+                  node->next = current->next;
+                  node->value = e;
+                  current->next = node;
+  
+                  this->m_length++;
+               }
+               else
+               {
+                  THROW_EXCEPTION(NoEnoughMemoryException,"Failed in insert LinkList...");
+               }
+            }
+            return ret;
+         }
+         bool remove(int i)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               Node* current = position(i);
+               auto toDel = current->next;
+               current->next = toDel->next;
+               this->m_length--;
+               delete toDel;
+            }
+            return ret;
+         }
+         bool set(int i, const T& e)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            if(ret)
+            {
+               position(i)->next->value = e;
+            }
+            return ret;
+         }
+  
+         T get(int i) const
+         {
+            T ret;
+            if(get(i, ret))
+            {
+               return ret;
+            }
+            else
+            {
+               THROW_EXCEPTION(IndexOutOfBoundsException, "Invalid parameter used here ......");
+            }
+         }
+         bool get(int i, T& e) const
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               e = position(i)->next->value;
+            }
+            return ret;
+         }
+  
+         int length() const
+         {
+            return this->m_length;
+         }
+  
+         void clear()
+         {
+  
+            while(this->m_header.next != nullptr)
+            {
+               auto toDel = this->m_header.next;
+               this->m_header.next = toDel->next;
+               delete toDel;
+            }
+            this->m_length = 0;
+         }
+  
+         //find
+         int find(const T& e) const //O(n)
+         {
+            int ret = -1;
+            Node* current = reinterpret_cast<Node *>(&this->m_header);
+            for(int i=0; i<this->m_length; ++i)
+            {
+               current = current->next;
+               if(current->value == e)
+               {
+                  ret = i;
+                  break;
+               }
+            }
+            return ret;
+         }
+  
+  
+         //destructor
+         ~LinkList()
+         {
+            clear();
+         }
+  
+         //fast looping related functions
+  
+         bool move(int i, int step=1)
+         {
+            bool ret = ((0 <= i) && (i < this->m_length) && (step > 0));
+            if(ret)
+            {
+               this->m_current = position(i)->next;
+               m_step = step;
+            }
+            return ret;
+         }
+  
+         bool next()
+         {
+            int i = 0;
+            while((i<this->m_step)&&!this->end())
+            {
+               this->m_current = this->m_current->next;
+               ++i;
+            }
+            return (i == this->m_step);
+         }
+  
+         bool end()
+         {
+            return (this->m_current == nullptr);
+         }
+  
+         T current()
+         {
+            if(!this->end())
+            {
+               return this->m_current->value;
+            }
+            else
+            {
+               THROW_EXCEPTION(InValidOperationException, "No value at current position... ");
+            }
+         }
+  
+      };
+  }
+  #endif //DTLIB_LINKLIST_H
+  ```
+
+- 测试代码如下：
+
+- 
+
+- ```cpp
+  #include <iostream>
+  
+  #include "SmartPointer.h"
+  #include "Exception.h"
+  #include "Object.h"
+  #include "List.h"
+  #include "SeqList.h"
+  #include "StaticList.h"
+  #include "DynamicList.h"
+  #include "StaticArray.h"
+  #include "DynamicArray.h"
+  #include "LinkList.h"
+  
+  
+  using namespace DTLib;
+  void test_4_fast_looping();
+  
+  int main()
+  {
+  //    test_4_sp();
+  //    test_4_exception();
+  //    test_4_obj();
+  //    test_4_single_tree();
+  //  test_4_list_00();
+  //  test_4_SeqList_00();
+  //  test_4_StaticList_00();
+  //  test_4_DynamicList_00();
+  //  test_4_cp_List();
+  //  test_4_insert_back();
+  //  test_4_static_array();
+  //  test_4_dynamic_array();
+  //  test_4_link_list();
+  //  test_4_link_list_2();
+  //  test_4_list_find();
+      test_4_fast_looping();
+      return 0;
+  }
+  
+  void test_4_fast_looping()
+  {
+      LinkList<int> list;
+      for(int i=0; i<5; ++i)
+      {
+         list.insert(0,i);
+      }
+      //move the iterator to the original point
+  
+      for(list.move(0); !list.end(); list.next())	//O(n)
+      {
+         std::cout << list.current() << "\t";
+      }
+      std::cout << std::endl;
+  }
+  ```
+
+- 单链表内部再来一次封装
+
+- ```cpp
+  virtual Node* create()
+  {
+      return new Node();
+  }
+  
+  virtual void destroy(Node* pn)
+  {
+      delete pn;
+  }
+  ```
+
+- 封装之后的代码`LinkList.h`如下
+
+- 
+
+- ```cpp
+  /**
+    ******************************************************************************
+    * @file           : LinkList.h
+    * @author         : herryao
+    * @brief          : None
+    * @email          : stevenyao@g.skku.edu
+    * @date           : 4/16/24
+    ******************************************************************************
+    */
+  
+  #ifndef DTLIB_LINKLIST_H
+  #define DTLIB_LINKLIST_H
+  #include "List.h"
+  
+  
+  namespace DTLib
+  {
+      template <typename T>
+      class LinkList: public List<T>
+      {
+      protected:
+         struct Node: public Object
+         {
+            T value;
+            Node* next;
+         };
+         //为了防止出现在const函数中出现类型转换的问题
+  //     mutable Node  m_header;
+         //不再显示调用构造函数，而是采用匿名结构体构造和原来
+         //Node类型对象相同的内存分布，但并不会调用T的构造函数
+         //而是预留空间
+         mutable struct: public Object{
+            char reserved[sizeof(T)];
+            Node* next;
+         } m_header;
+         int m_length;
+         int m_step;
+         Node* m_current;
+  
+  
+         Node* position(int i) const
+         {
+  //        Node* current =&this->m_header;
+            Node* current = reinterpret_cast<Node*>(&this->m_header);
+            for(int p=0; p<i; p++)
+            {
+               current = current->next;
+            }
+            return current;
+         }
+  
+         virtual Node* create()
+         {
+            return new Node();
+         }
+  
+         virtual void destroy(Node* pn)
+         {
+            delete pn;
+         }
+  
+  
+      public:
+  
+         LinkList()
+         {
+            this->m_length = 0;
+            this->m_header.next = nullptr;
+            this->m_step = 1;
+            this->m_current = nullptr;
+         }
+  
+         bool insert(const T& e)
+         {
+            return insert(this->m_length, e);
+         }
+  
+         bool insert(int i, const T& e)
+         {
+            bool ret = ((i>=0)&&(i<=this->m_length));
+  
+            if(ret)
+            {
+               Node* node = create();
+               if(node != nullptr)
+               {
+                  Node* current = position(i);
+                  node->next = current->next;
+                  node->value = e;
+                  current->next = node;
+  
+                  this->m_length++;
+               }
+               else
+               {
+                  THROW_EXCEPTION(NoEnoughMemoryException,"Failed in insert LinkList...");
+               }
+            }
+            return ret;
+         }
+         bool remove(int i)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               Node* current = position(i);
+               auto toDel = current->next;
+               current->next = toDel->next;
+               this->m_length--;
+               destroy(toDel);
+            }
+            return ret;
+         }
+         bool set(int i, const T& e)
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            if(ret)
+            {
+               position(i)->next->value = e;
+            }
+            return ret;
+         }
+  
+         T get(int i) const
+         {
+            T ret;
+            if(get(i, ret))
+            {
+               return ret;
+            }
+            else
+            {
+               THROW_EXCEPTION(IndexOutOfBoundsException, "Invalid parameter used here ......");
+            }
+         }
+         bool get(int i, T& e) const
+         {
+            int ret = ((i>=0)&&(i<this->m_length));
+            ret = ret && (this->m_length > 0);
+            if(ret)
+            {
+               //如果在一个const函数中获取一个成员的地址
+               //如果获取地址就存在篡改常量的可能
+               //被认为有可能会修改成员变量的值
+               //解决方法，将相关的成员声明为mutable
+               //此时编译器就会允许在一个const的函数中获取一个成员变量的地址了
+               //maybe the const pointer can be changed in a const function
+               //也可以使用常量的强制转换
+  //           Node* current = const_cast<Node*>(&this->m_header);
+  //           Node* current = position(i);
+  //           e = current->next->value;
+  
+               e = position(i)->next->value;
+            }
+            return ret;
+         }
+  
+         int length() const
+         {
+            return this->m_length;
+         }
+  
+         void clear()
+         {
+  
+            while(this->m_header.next != nullptr)
+            {
+               auto toDel = this->m_header.next;
+               this->m_header.next = toDel->next;
+               destroy(toDel);
+            }
+            this->m_length = 0;
+         }
+  
+         //find
+         int find(const T& e) const //O(n)
+         {
+            int ret = -1;
+            Node* current = reinterpret_cast<Node *>(&this->m_header);
+            for(int i=0; i<this->m_length; ++i)
+            {
+               current = current->next;
+               if(current->value == e)
+               {
+                  ret = i;
+                  break;
+               }
+            }
+            return ret;
+         }
+  
+  
+         //destructor
+         ~LinkList()
+         {
+            clear();
+         }
+  
+         //fast looping related functions
+  
+         bool move(int i, int step=1)
+         {
+            bool ret = ((0 <= i) && (i < this->m_length) && (step > 0));
+            if(ret)
+            {
+               this->m_current = position(i)->next;
+               m_step = step;
+            }
+            return ret;
+         }
+  
+         bool next()
+         {
+            int i = 0;
+            while((i<this->m_step)&&!this->end())
+            {
+               this->m_current = this->m_current->next;
+               ++i;
+            }
+            return (i == this->m_step);
+         }
+  
+         bool end()
+         {
+            return (this->m_current == nullptr);
+         }
+  
+         T current()
+         {
+            if(!this->end())
+            {
+               return this->m_current->value;
+            }
+            else
+            {
+               THROW_EXCEPTION(InValidOperationException, "No value at current position... ");
+            }
+         }
+  
+      };
+  }
+  #endif //DTLIB_LINKLIST_H
+  ```
+
+- 问题：封装`create 和 destroy`的意义是什么？
+- 小结：
+  - 单链表的遍历需要在线性时间内完成
+  - 在单链表内部定义游标变量，通过游标变量提高效率
+  - 遍历相关的成员函数是相互依赖，相互配合的关系
+  - 封装节点的申请和删除操作更有利于增强扩展性
+
+
+
+## 第二十五课：静态单链表的实现
+
+- 单链表的一个缺陷
+  - 可能的后果
+    - 堆空间产生大量的内存碎片，导致系统运行缓慢
+  - 触发条件
+    - 长时间使用单链表对象，频繁增加和删除数据元素
+- 新的线性表
+  - 设计思路：
+  - 在单链表内部增加一片预留的空间（必须是一段连续的内存），所有的Node对象都在这片堆空间中动态的创建和销毁
+  - 顺序表 + 单链表 = 静态单链表 
+  - 通过create和delete函数对内部成员进行创建和销毁而不是new和delete
+  - 由此可以明白为何之前在LinkList中要重新封装create和destroy两个函数
+- 静态单链表应当继承子单链表，并重写函数create和destroy
+- List <- LinkList <- StaticLinkList
+- 静态单链表的实现思路
+  - 通过模板定义静态单链表类（StaticLinkList）
+  - 在类中定义固定大小的空间（`unsigned char[]`）
+  - 重写create和destroy函数，改变内存的分配和归还方式
+  - 在Node类中重载operator new，用于在指定内存上创建对象
+- 编程实验一：`StaticLinkList.h`
+- 

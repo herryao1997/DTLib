@@ -118,6 +118,9 @@
 		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/StaticArray.h">
 			<Option target="DTLIb"/>
 		</Unit>
+		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/StaticLinkList.h">
+			<Option target="DTLIb"/>
+		</Unit>
 		<Unit filename="/home/herryao/cs/DT/DTLib/DTLIb/StaticList.h">
 			<Option target="DTLIb"/>
 		</Unit>

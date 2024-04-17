@@ -32,6 +32,14 @@ namespace DTLib
 
     Object::~Object(){}
 
+	bool Object::operator==(const Object &obj) const
+	{
+		return (this == &obj);
+	}
+
+	bool Object::operator!=(const Object &obj) const{
+		return (&obj != this);
+	}
 
 
 } // DTLIb
